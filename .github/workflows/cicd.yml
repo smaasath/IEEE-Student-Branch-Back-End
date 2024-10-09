@@ -1,0 +1,48 @@
+name: Deploy Spring Boot Application
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 22
+        uses: actions/setup-java@v3
+        with:
+          java-version: '22'
+
+      - name: Build with Maven
+        run: mvn clean package
+
+      - name: Build Docker image
+        run: docker build -t ieeebackend .
+
+      - name: Push Docker image to Docker Hub
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker tag ieeebackend "${{ secrets.DOCKER_USERNAME }}/ieeebackend:latest"
+          docker push "${{ secrets.DOCKER_USERNAME }}/ieeebackend:latest"
+
+  deploy:
+    needs: build
+    runs-on: self-hosted  # Use your self-hosted runner
+
+    steps:
+      - name: Pull Image from Docker Hub
+        run: |
+          docker pull "${{ secrets.DOCKER_USERNAME }}/ieeebackend:latest"
+
+      - name: Delete old container
+        run: |
+          docker rm -f springboot-example-container || true
+
+      - name: Run Docker container
+        run: |
+          docker run -d -p 8080:8080 --name ieeebackend-container "${{ secrets.DOCKER_USERNAME }}/ieeebackend:latest"
