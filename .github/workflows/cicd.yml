@@ -23,7 +23,7 @@ jobs:
         run: mvn clean package
 
       - name: Build Docker image
-        run: docker build -t ieeebackend .
+        run: docker build -t "${{ secrets.DOCKER_USERNAME }}/ieeebackend:latest" .
 
       - name: Push Docker image to Docker Hub
         run: |
