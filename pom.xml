@@ -96,6 +96,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>ieee</finalName>
     </build>
 
 </project>
