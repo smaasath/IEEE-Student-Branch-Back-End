@@ -42,7 +42,7 @@ jobs:
 
       - name: Delete old container
         run: |
-          docker rm -f springboot-example-container || true
+          docker rm -f ieeebackend-container || true
 
       - name: Run Docker container
         run: |
