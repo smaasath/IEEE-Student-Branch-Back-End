@@ -23,22 +23,23 @@ jobs:
         run: mvn clean package
 
       - name: Build Docker image
-        run: docker build -t aasadh/ieeebackend:latest" .
+        run: |
+          echo "Building Docker image"
+          docker build -t aasadh/ieeebackend:latest .
 
       - name: Push Docker image to Docker Hub
         run: |
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-          docker tag ieeebackend aasadh/ieeebackend:latest"
-          docker push aasadh/ieeebackend:latest"
+          docker push aasadh/ieeebackend:latest
 
   deploy:
     needs: build
-    runs-on: [ieee]
+    runs-on: ieee
 
     steps:
       - name: Pull Image from Docker Hub
         run: |
-          docker pull aasadh/ieeebackend:latest"
+          docker pull aasadh/ieeebackend:latest
 
       - name: Delete old container
         run: |
@@ -46,4 +47,4 @@ jobs:
 
       - name: Run Docker container
         run: |
-          docker run -d -p 8080:8080 --name ieeebackend-container aasadh/ieeebackend:latest"
+          docker run -d -p 8080:8080 --name ieeebackend-container aasadh/ieeebackend:latest
