@@ -26,7 +26,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: [ieee]
     steps:
       - name: Pull Image from Docker Hub
         run: docker pull smaasadh/aasadh:latest
