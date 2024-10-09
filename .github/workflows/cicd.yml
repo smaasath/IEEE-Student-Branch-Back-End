@@ -1,35 +1,28 @@
-name: Deploy Spring Boot Application
+name: CICD
 
 on:
   push:
-    branches:
-      - main
+    branches: [deploy-to-ec2]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: [ubuntu-latest]
     steps:
-      - name: Checkout code
+      - name: Checkout source
         uses: actions/checkout@v3
-
-      - name: Set up JDK 22
+      - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '22'
-
-      - name: Build with Maven
-        run: mvn clean package
-
-      - name: Build Docker image
-        run: docker build -t ieeebackend .
-
-      - name: Push Docker image to Docker Hub
-        run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-          docker tag ieeebackend "${{ secrets.DOCKER_USERNAME }}/ieeebackend:latest"
-          docker push "${{ secrets.DOCKER_USERNAME }}/ieeebackend:latest"
+          java-version: '17'
+      - name: Build Project
+        run: mvn clean install -DskipTests
+      - name: Login to docker hub
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
+      - name: Build docker image
+        run: docker build -t ieeebackend/ieeebackend .
+      - name: Publish image to docker hub
+        run: docker push ieeebackend/ieeebackend:latest
 
   deploy:
     needs: build
