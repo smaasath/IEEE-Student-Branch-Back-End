@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      DB_PASSWORD: root
+      DB_URL: jdbc:mysql://localhost:3306/ieee?createDatabaseIfNotExist=true
+      DB_USER_NAME: root
+      EMAIL: aasathsm9218@gmail.com
+      EMAIL_PASSWORD: ijetmhxifagrykzz
+      JWT_SECRET: 35246d572b6f687129264043555b6470267b4c4071663e693b796c5a2a2b5e2d
+
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ieee
+    ports:
+      - "3306:3306"

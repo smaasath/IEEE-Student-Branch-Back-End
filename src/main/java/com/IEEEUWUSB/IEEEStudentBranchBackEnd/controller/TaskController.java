@@ -185,15 +185,12 @@ public class TaskController {
                 return new ResponseEntity<>(commonResponseDTO, HttpStatus.NOT_FOUND);
             }
 
-            // Update the task attributes
             task.setTask_name(taskDTO.getTask_name());
             task.setPriority(taskDTO.getPriority());
             task.setType(taskDTO.getType());
             task.setStart_date(taskDTO.getStart_date());
             task.setEnd_date(taskDTO.getEnd_date());
             task.setStatus(taskDTO.getStatus());
-
-            // Save the updated task
             Task updatedTask = taskService.saveTask(task);
 
             commonResponseDTO.setData(updatedTask);
