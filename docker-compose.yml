@@ -6,12 +6,12 @@ services:
     ports:
       - "8080:8080"
     environment:
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_URL: ${DB_URL}
-      DB_USER_NAME: ${DB_USER_NAME}
-      EMAIL: ${EMAIL}
-      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
-      JWT_SECRET: ${JWT_SECRET}
+      DB_PASSWORD: AmizaUmma
+      DB_URL: jdbc:mysql://ieee.chum4mgy6gx6.ap-southeast-2.rds.amazonaws.com:3306/ieee?createDatabaseIfNotExist=true
+      DB_USER_NAME: rooy
+      EMAIL: aasathsm9218@gmail.com
+      EMAIL_PASSWORD: ijetmhxifagrykzz
+      JWT_SECRET: 35246d572b6f687129264043555b6470267b4c4071663e693b796c5a2a2b5e2d
     depends_on:
       - mysql
 
