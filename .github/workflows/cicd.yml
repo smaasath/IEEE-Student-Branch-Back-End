@@ -38,7 +38,7 @@ jobs:
     steps:
       - name: Pull Image from Docker Hub
         run: |
-          docker pull "${{ secrets.DOCKER_USERNAME }}/ieeebackend:latest"
+          docker pull aasadh/ieeebackend:latest"
 
       - name: Delete old container
         run: |
@@ -46,4 +46,4 @@ jobs:
 
       - name: Run Docker container
         run: |
-          docker run -d -p 8080:8080 --name ieeebackend-container "${{ secrets.DOCKER_USERNAME }}/ieeebackend:latest"
+          docker run -d -p 8080:8080 --name ieeebackend-container aasadh/ieeebackend:latest"
