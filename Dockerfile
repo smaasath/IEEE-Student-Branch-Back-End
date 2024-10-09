@@ -5,7 +5,7 @@ FROM openjdk:22
 WORKDIR /app
 
 # Copy the jar file into the container
-COPY target/your-app.jar app.jar
+COPY target/IEEE-Student-Branch-Back-End.jar app.jar
 
 # Expose the port your app runs on
 EXPOSE 8080
