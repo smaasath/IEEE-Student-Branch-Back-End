@@ -207,12 +207,12 @@ public class ProjectController {
                 long todo = projectService.countProjectsByCriteria(search, "TODO", ou, termyear);
                 long progress = projectService.countProjectsByCriteria(search, "PROGRESS", ou, termyear);
                 long complete = projectService.countProjectsByCriteria(search, "COMPLETE", ou, termyear);
-                data = new StatusCountDTO(todo, progress, complete);
+                data = new StatusCountDTO(todo, progress, complete); 
 
             } else {
                 long todo = projectService.countProjectsByUser("TODO", user, user);
                 long progress = projectService.countProjectsByUser("PROGRESS", user, user);
-                long complete = projectService.countProjectsByUser( "COMPLETE", user, user);
+                long complete = projectService.countProjectsByUser("COMPLETE", user, user);
                 data = new StatusCountDTO(todo, progress, complete);
             }
 
@@ -240,7 +240,7 @@ public class ProjectController {
             }
             List<UserRoleDetails> userRoleDetails = userRoleDetailsServices.getuserRoleDetailsByProject(user, true, "PROJECT", project_id);
             List<UserRoleDetails> OthersuserRoleDetails = userRoleDetailsServices.getAlluserRoleDetailsByProject(true, "PROJECT", project_id);
-            ProjectUserPermissionDTO data= new ProjectUserPermissionDTO(project,userRoleDetails,OthersuserRoleDetails);
+            ProjectUserPermissionDTO data = new ProjectUserPermissionDTO(project, userRoleDetails, OthersuserRoleDetails);
             commonResponseDTO.setData(data);
             commonResponseDTO.setMessage("Project retrieved successfully");
             return new ResponseEntity<>(commonResponseDTO, HttpStatus.OK);
@@ -250,7 +250,6 @@ public class ProjectController {
             return new ResponseEntity<>(commonResponseDTO, HttpStatus.BAD_REQUEST);
         }
     }
-
 
 
     @DeleteMapping("/{project_id}")
@@ -327,7 +326,7 @@ public class ProjectController {
                 }
 
                 UserRoleDetails subuserRoleDetailsProject = userRoleDetailsServices.getuserRoleDetailsByProjectSingleObject(subuser, true, "PROJECT", projectId);
-                List<UserRoleDetails> otherUserRoleDetailsInsameProject = userRoleDetailsServices.getuserroledetailsbyroleandproject(role,true, project);
+                List<UserRoleDetails> otherUserRoleDetailsInsameProject = userRoleDetailsServices.getuserroledetailsbyroleandproject(role, true, project);
                 if (subuserRoleDetailsProject != null) {
                     if (role == subuserRoleDetailsProject.getRole()) {
                         commonResponseDTO.setMessage("Already Assigned Role");
